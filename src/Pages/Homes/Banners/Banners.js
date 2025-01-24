@@ -28,7 +28,7 @@ const images = [
 ];
 const Banners = () => {
     return (
-        <div className='mx-2 mt-5 flex'>
+        <div className='lg:mx-20 mt-5 flex'>
             <div className='mx-2'>
                 <ImageGallery className='' showThumbnails={false}
                     showFullscreenButton={false} showBullets={true}
