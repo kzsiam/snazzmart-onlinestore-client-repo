@@ -16,7 +16,7 @@ const AddToCarts = () => {
     const { data: cartDetails, refetch, isLoading } = useQuery({
         queryKey: 'cartDetails',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/addToCarts?email=${user?.email}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/addToCarts?email=${user?.email}`)
             const data = await res.json()
             return data
         }
@@ -36,7 +36,7 @@ const AddToCarts = () => {
 
 
     const handleDeleteCart = (id) => {
-        fetch(`http://localhost:5000/addToCarts/${id}`, {
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/addToCarts/${id}`, {
             method: 'DELETE',
 
         })
@@ -68,7 +68,7 @@ const AddToCarts = () => {
     }
 
     return (
-        <div className='mt-20'>
+        <div className='mt-20 mb-96'>
             <div className="">
 
                 {/* head */}

@@ -10,7 +10,7 @@ const Products = () => {
     const { data: products, isPending } = useQuery({
         queryKey: 'products',
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/justForyou')
+            const res = await fetch('https://snazzmart-onlinestore-server.vercel.app/justForyou')
             const data = await res.json()
             return data;
 

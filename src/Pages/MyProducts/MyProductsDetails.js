@@ -54,7 +54,7 @@ const MyProductsDetails = () => {
     const { data: similarData, refetch } = useQuery({
         queryKey: 'similarData',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/similarProduct/${categories}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/similarProduct/${categories}`)
             const data = await res.json()
             return data
         }
@@ -67,7 +67,7 @@ const MyProductsDetails = () => {
     }
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/product/${id}`, {
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/product/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -100,7 +100,7 @@ const MyProductsDetails = () => {
             stock: stock,
             color: color
         }
-        fetch(`http://localhost:5000/myProduct/${_id}`, {
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/myProduct/${_id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

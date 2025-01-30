@@ -12,7 +12,7 @@ const MyOrders = () => {
 
         queryKey: 'myOrderedData',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/orders/${user?.email}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/orders/${user?.email}`)
             const data = await res.json()
             return data
         }
@@ -27,7 +27,7 @@ const MyOrders = () => {
     console.log(myOrderedData)
     return (
 
-        <div>
+        <div className='mb-96'>
             <h1 className='text-xl font-bold mb-20 mt-10'>Your Ordered Item</h1>
             {
                 myOrderedData?.map(orderedData =>

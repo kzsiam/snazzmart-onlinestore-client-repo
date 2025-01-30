@@ -16,7 +16,7 @@ const AddProducts = () => {
     const { data: categoriesCollection, isPending } = useQuery({
         queryKey: ['categoriesCollection'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/categories')
+            const res = await fetch('https://snazzmart-onlinestore-server.vercel.app/categories')
             const data = await res.json()
             return data;
         }
@@ -27,7 +27,7 @@ const AddProducts = () => {
     const [sellerInfo, setSellerInfo] = useState(null)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/allUsers/${user?.email}`)
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/allUsers/${user?.email}`)
             .then((res) => {
                 return res.json()
             })
@@ -69,7 +69,7 @@ const AddProducts = () => {
 
                 console.log(productsData)
 
-                fetch('http://localhost:5000/allProducts', {
+                fetch('https://snazzmart-onlinestore-server.vercel.app/allProducts', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

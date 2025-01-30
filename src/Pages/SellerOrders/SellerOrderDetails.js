@@ -14,7 +14,7 @@ const SellerOrderDetails = () => {
 
     const handleOrderStatus = (data) => {
         
-        fetch(`http://localhost:5000/orders/${sellerOrderDetails._id}`,{
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/orders/${sellerOrderDetails._id}`,{
             method: 'PATCH',
             headers:{
                 'content-type': 'application/json'

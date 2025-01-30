@@ -38,7 +38,7 @@ const Signup = () => {
 
                     console.log(result)
 
-                    fetch("http://localhost:5000/allUsers", {
+                    fetch("https://snazzmart-onlinestore-server.vercel.app/allUsers", {
                         method: 'POST',
                         headers:{
                             'content-type': 'application/json'

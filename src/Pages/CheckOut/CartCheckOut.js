@@ -22,7 +22,7 @@ const CartCheckOut = () => {
     const { data: cartData, refetch, isLoading } = useQuery({
         queryKey: 'cartDetails',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/addToCarts/${cartDetails._id}?email=${user?.email}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/addToCarts/${cartDetails._id}?email=${user?.email}`)
             const data = await res.json()
             return data
         }
@@ -53,7 +53,7 @@ const CartCheckOut = () => {
             itemsId: cartDetails._id,
             images: cartDetails.images
         }
-        fetch('http://localhost:5000/orders',{
+        fetch('https://snazzmart-onlinestore-server.vercel.app/orders',{
             method:'POST',
             headers:{
                 'content-type': 'application/json'

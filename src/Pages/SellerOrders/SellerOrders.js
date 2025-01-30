@@ -11,7 +11,7 @@ const SellerOrders = () => {
 
         queryKey: 'sellerOrders',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/sellerOrders/${user?.email}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/sellerOrders/${user?.email}`)
             const data = await res.json()
             return data
         }

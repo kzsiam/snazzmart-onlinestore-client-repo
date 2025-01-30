@@ -7,7 +7,7 @@ const FlashSales = () => {
     const { data: flashSales } = useQuery({
         queryKey: 'flashSales',
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/flashSale')
+            const res = await fetch('https://snazzmart-onlinestore-server.vercel.app/flashSale')
             const data = res.json();
             return data;
         }

@@ -39,7 +39,7 @@ const CheckOut = () => {
             itemsId: itemsDetails.id,
             images: itemsDetails.images
         }
-        fetch('http://localhost:5000/orders',{
+        fetch('https://snazzmart-onlinestore-server.vercel.app/orders',{
             method:'POST',
             headers:{
                 'content-type': 'application/json'

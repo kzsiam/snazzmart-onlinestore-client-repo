@@ -21,7 +21,7 @@ const AllUsers = () => {
     const { data: allUsers, isLoading, refetch } = useQuery({
         queryKey: "allUsers",
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/allUsers')
+            const res = await fetch('https://snazzmart-onlinestore-server.vercel.app/allUsers')
             const data = await res.json()
             return data;
 
@@ -49,7 +49,7 @@ const AllUsers = () => {
 
     const handleMakeAdmin = (id) => {
         console.log(id)
-        fetch(`http://localhost:5000/allUsers/${id}`, {
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/allUsers/${id}`, {
             method: 'PATCH',
             headers: {
 
@@ -68,7 +68,7 @@ const AllUsers = () => {
     }
 
     const handleDeleteUser = (id) => {
-        fetch(`http://localhost:5000/allUsers/${id}`, {
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/allUsers/${id}`, {
             method: 'DELETE',
             headers: {
 
@@ -80,7 +80,7 @@ const AllUsers = () => {
                 console.log(data)
                 if (data.deletedCount > 0) {
 
-                    toast.success('Make Admin Successfully')
+                    toast.success('Delete Successfully')
                     refetch()
                 }
             })

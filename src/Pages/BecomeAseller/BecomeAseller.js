@@ -20,7 +20,7 @@ const BecomeAseller = () => {
 
         console.log(sellerInfo)
 
-        fetch(`http://localhost:5000/allUsers/${user?.email}`,{
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/allUsers/${user?.email}`,{
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

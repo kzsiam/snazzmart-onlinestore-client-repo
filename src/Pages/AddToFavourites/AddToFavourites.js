@@ -13,7 +13,7 @@ const AddToFavourites = () => {
 
         queryKey: 'favouritesData',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/addToFavourites?email=${user?.email}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/addToFavourites?email=${user?.email}`)
             const data = await res.json()
             return data
         }
@@ -26,7 +26,7 @@ const AddToFavourites = () => {
    }
 
    const handleDeleteFvourites = (id) =>{
-        fetch(`http://localhost:5000/addToFavourites/${id}`,{
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/addToFavourites/${id}`,{
             method: 'DELETE',
 
         })
@@ -44,7 +44,7 @@ const AddToFavourites = () => {
 }
 
     return (
-        <div className='mt-10'>
+        <div className='mt-10 mb-96'>
             {
                 favouritesData?.map(favouriteData =>
 

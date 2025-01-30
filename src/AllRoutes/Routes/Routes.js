@@ -51,17 +51,17 @@ export const router = createBrowserRouter([
         },
         {
             path: '/allProducts/:category',
-            loader: ({params}) => fetch(`http://localhost:5000/allProducts/${params.category}`),
+            loader: ({params}) => fetch(`https://snazzmart-onlinestore-server.vercel.app/allProducts/${params.category}`),
             element: <PrivateRoute><CategoryProducts></CategoryProducts></PrivateRoute>
         },
         {
             path: '/product/:id',
-            loader: ({params}) => fetch(`http://localhost:5000/product/${params.id}`),
+            loader: ({params}) => fetch(`https://snazzmart-onlinestore-server.vercel.app/product/${params.id}`),
             element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
         },
         {
             path: '/myProduct/:id',
-            loader: ({params}) => fetch(`http://localhost:5000/product/${params.id}`),
+            loader: ({params}) => fetch(`https://snazzmart-onlinestore-server.vercel.app/product/${params.id}`),
             element: <PrivateRoute><MyProductsDetails></MyProductsDetails></PrivateRoute>
         },
         {
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
         },
         {
             path: '/cartCheckout/:id',
-            loader: ({params}) => fetch(`http://localhost:5000/checkout/${params.id}`),
+            loader: ({params}) => fetch(`https://snazzmart-onlinestore-server.vercel.app/checkout/${params.id}`),
             element: <PrivateRoute><CartCheckOut></CartCheckOut></PrivateRoute>
         }
        ]
@@ -105,7 +105,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/dashboard/sellerOrderDetails/:id',
-                loader: ({params}) => fetch(`http://localhost:5000/sellerOrderDetails/${params.id}`),
+                loader: ({params}) => fetch(`https://snazzmart-onlinestore-server.vercel.app/sellerOrderDetails/${params.id}`),
                 element: <SellerRoute><SellerOrderDetails></SellerOrderDetails></SellerRoute>
             },
             {

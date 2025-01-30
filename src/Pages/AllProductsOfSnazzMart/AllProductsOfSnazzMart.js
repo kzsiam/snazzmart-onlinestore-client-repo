@@ -7,7 +7,7 @@ const AllProductsOfSnazzMart = () => {
  
     const [allProductsOfSnazzMart,setAllProductsOfSnazzMart] = useState()
     useEffect(() => {
-        fetch(`http://localhost:5000/allProductsOfSnazzMart?sort=${asc ? 'asc' : 'dsc'}`)
+        fetch(`https://snazzmart-onlinestore-server.vercel.app/allProductsOfSnazzMart?sort=${asc ? 'asc' : 'dsc'}`)
             .then(res => res.json())
             .then(data => {
                 setAllProductsOfSnazzMart(data)
@@ -18,7 +18,7 @@ const AllProductsOfSnazzMart = () => {
     // const { data: allProductsOfSnazzMart, isPending } = useQuery({
     //     queryKey: 'allProductsOfSnazzMart',
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/allProductsOfSnazzMart?order=${isAsc ? 'PriceAsc' : 'PriceDsc'}`)
+    //         const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/allProductsOfSnazzMart?order=${isAsc ? 'PriceAsc' : 'PriceDsc'}`)
     //         const data = await res.json()
     //         return data;
     //     }

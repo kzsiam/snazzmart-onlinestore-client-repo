@@ -58,7 +58,7 @@ const ProductDetails = () => {
     const { data: similarData, refetch } = useQuery({
         queryKey: 'similarData',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/similarProduct/${categories}`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/similarProduct/${categories}`)
             const data = await res.json()
             return data
         }
@@ -89,7 +89,7 @@ const ProductDetails = () => {
         }
 
         console.log(cartProdDetails)
-        fetch('http://localhost:5000/addToCart', {
+        fetch('https://snazzmart-onlinestore-server.vercel.app/addToCart', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -122,7 +122,7 @@ const ProductDetails = () => {
             brand: brand
         }
         console.log(favouritesData)
-        fetch('http://localhost:5000/addToFavourites', {
+        fetch('https://snazzmart-onlinestore-server.vercel.app/addToFavourites', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -296,7 +296,7 @@ const ProductDetails = () => {
                     <p className='mt-10'>{description}</p>
                 </div>
             </div>
-            <div className='mt-20'>
+            <div className='mt-20 mb-40'>
                 <h1 className='text-start font-bold mb-10 mx-5'>You may also like</h1>
                 <div className='grid lg:grid-cols-6 grid-cols-2 md:grid-cols-3 gap-2 mx-5'>
                     {

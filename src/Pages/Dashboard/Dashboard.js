@@ -10,7 +10,7 @@ const Dashboard = () => {
 
         queryKey: 'allOrderData',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/orders`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/orders`)
             const data = await res.json()
             return data
         }
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
         queryKey: 'allUsers',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allUsers`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/allUsers`)
             const data = await res.json()
             return data
         }
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
         queryKey: 'allProducts',
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allproductsOfSnazzMart`)
+            const res = await fetch(`https://snazzmart-onlinestore-server.vercel.app/allproductsOfSnazzMart`)
             const data = await res.json()
             return data
         }
