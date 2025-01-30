@@ -1,4 +1,4 @@
-import React, { useContext,  } from 'react';
+import React, { useContext, } from 'react';
 import { Link } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
@@ -10,16 +10,16 @@ import UseAdmin from '../../hooks/UseAdmin';
 
 
 const Navbar = () => {
-    const { user,logout } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
 
-    const [isSeller,isSellerLoading] = UseSeller(user?.email)
-    const [isAdmin,isAdminLoading] = UseAdmin(user?.email)
+    const [isSeller, isSellerLoading] = UseSeller(user?.email)
+    const [isAdmin, isAdminLoading] = UseAdmin(user?.email)
 
-    
-    
-   
 
-    const handleLogout = () =>{
+
+
+
+    const handleLogout = () => {
         logout()
     }
 
@@ -35,7 +35,7 @@ const Navbar = () => {
                             !isSeller && <Link to={'/becomeAseller'}>Become a Seller</Link>
                         }
                         {
-                            !isSeller &&  <Link>My Orders</Link>
+                            !isSeller && <Link to={'/myOrders'}>My Orders</Link>
                         }
                         <Link>About</Link>
                         <Link>Help & Support</Link>
@@ -43,10 +43,10 @@ const Navbar = () => {
                             isSeller  && <Link to={'/dashboard'}>DashBoard</Link>
                         } */}
                         {
-                            isSeller || isAdmin ? <Link to={'/dashboard'}>DashBoard</Link>:<></>
+                            isSeller || isAdmin ? <Link to={'/dashboard'}>DashBoard</Link> : <></>
                         }
-                    
-                        
+
+
 
                     </div>
                     <div className="flex justify-evenly items-center lg:mx-10 mx-5">
@@ -57,15 +57,18 @@ const Navbar = () => {
                         </div>
                         <div className="navbar-center lg:flex justify-center  pb-5 pt-5 hidden">
                             <label className="input flex items-center lg:gap-5 bg-gray-200 pr-0">
-                                <input  type="text" className="lg:w-80 " placeholder="Search in SnazzMart" />
-                                <button  className='bg-zinc-950 px-5 py-4 rounded-r text-white'><IoSearch /></button>
+                                <input type="text" className="lg:w-80 " placeholder="Search in SnazzMart" />
+                                <button className='bg-zinc-950 px-5 py-4 rounded-r text-white'><IoSearch /></button>
                             </label>
                         </div>
                         <div className="navbar-end ">
                             <div className="">
                                 <div className="text-white flex gap-5 justify-center font-semibold">
-                                    <FaHeart className='text-2xl' />
-                                    <FiShoppingCart className='text-2xl' />
+
+                                    <Link to={'/addToFavourites'}>
+                                        <FaHeart className='text-2xl' />
+                                    </Link>
+                                    <Link to={'/addToCarts'}><FiShoppingCart className='text-2xl' /></Link>
                                     {
                                         !user && <Link to={'/signin'}>Signin</Link>
                                     }
@@ -87,7 +90,7 @@ const Navbar = () => {
 
                     <div className="navbar-center flex justify-center pb-5 lg:hidden mt-5">
                         <label className="input flex items-center lg:gap-5 bg-gray-200 pr-0">
-                            <input  type="text" className="lg:w-80 " placeholder="Search in SnazzMart" />
+                            <input type="text" className="lg:w-80 " placeholder="Search in SnazzMart" />
                             <button className='bg-zinc-950 px-10 py-4 rounded-r text-white'><IoSearch /></button>
                         </label>
                     </div>

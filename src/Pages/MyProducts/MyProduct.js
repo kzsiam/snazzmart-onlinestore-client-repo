@@ -9,7 +9,7 @@ const MyProduct = ({product}) => {
     const discountedPrice = (price - discountedAmount).toFixed(0)
     return (
         <div>
-            <Link to={`/product/${_id}`}>
+            <Link to={`/myProduct/${_id}`}>
                 <div className=" bg-base-100 w-62 shadow-sm hover:shadow-xl">
                     <figure className="px-5 pt-5">
                         <img

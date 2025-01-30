@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { SlLocationPin } from "react-icons/sl";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { CiCircleInfo } from "react-icons/ci";
@@ -14,33 +14,29 @@ import UseAdmin from '../../hooks/UseAdmin';
 import { AuthContext } from '../../contexts/AuthProvider';
 import UseSeller from '../../hooks/UseSeller';
 import { useQuery } from '@tanstack/react-query';
-import Product from '../AllProducts/Products/Product';
-import { useForm } from 'react-hook-form';
+import { MdEditNote } from "react-icons/md";
 import toast from 'react-hot-toast';
+import ConfirmationModal from '../../SharedPages/ConfirmationModal/ConfirmationModal'
+import { useForm } from 'react-hook-form';
+import Product from '../../SharedPages/AllProducts/Products/Product';
 
+const MyProductsDetails = () => {
 
-
-
-
-
-
-const ProductDetails = () => {
     const { user } = useContext(AuthContext)
     const productDetails = useLoaderData()
-    console.log(productDetails)
 
     const navigate = useNavigate()
 
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
+    const [deletingProducts, setDeletingProducts] = useState(null)
 
     const [isAdmin, isAdminLoading] = UseAdmin(user?.email)
     const [isSeller, isSellerLoading] = UseSeller(user?.email)
-    const { register, handleSubmit } = useForm();
 
-    const { productName, images, categories, brand, shopName, price, discount, stock, color, description, _id, size,email } = productDetails;
-    
+    const { productName, images, categories, brand, shopName, price, discount, stock, color, description, _id, size } = productDetails;
 
-    const [quantityNumber, setQuantityNumber] = useState(1)
+    const [quantityNumber, setQuantityNumber] = useState(0)
 
     const handleIncrease = () => {
         setQuantityNumber(quantityNumber + 1)
@@ -65,110 +61,62 @@ const ProductDetails = () => {
 
     })
 
-    if (isAdminLoading) {
-        return <h1>.....</h1>
-    }
-    if (isSellerLoading) {
-        return <h1>.....</h1>
+
+    const cancelModalProd = () => {
+        setDeletingProducts(null)
     }
 
-
-    const handleAddToCart = (id) => {
-        
-        const getQuantity = document.getElementById('quantityValue').innerText;
-        const cartProdDetails = {
-            productName: productName,
-            productImage: images,
-            productPrice: discountedPrice,
-            productQuantity: getQuantity,
-            email: user?.email,
-            productId: _id,
-            brand: brand,
-            size:size,
-            color:color
-        }
-
-        console.log(cartProdDetails)
-        fetch('http://localhost:5000/addToCart', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(cartProdDetails)
+    const handleDelete = (id) => {
+        fetch(`http://localhost:5000/product/${id}`, {
+            method: 'DELETE'
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.acknowledged) {
-                    toast.success('Successfully added on Cart')
-                    navigate('/addToCarts')
-                }
-                else {
-                    toast.error(data.message)
-                    navigate('/addToCarts')
+                if (data.deletedCount > 0) {
+                    toast.success('Deleted Successfully')
+                    refetch()
+                    navigate('/dashboard/myProducts')
                 }
             })
+
     }
 
-    const handleFavourites = (id) => {
-        const favouritesData = {
-            email: user?.email,
-            productName: productName,
-            productPrice: discountedPrice,
-            productImage: images,
-            productId: id,
-            productSize: size,
-            color: color,
-            brand: brand
+    if (isAdminLoading) {
+        return <h1>.....</h1>
+    }
+
+
+
+
+    const handleUpdateProducts = (data) => {
+        const price = parseInt(data.price)
+        const discount = parseInt(data.discount)
+        const stock = parseInt(data.stock)
+
+        const UpdateDetails = {
+            price: price,
+            discount: discount,
+            stock: stock,
+            color: color
         }
-        console.log(favouritesData)
-        fetch('http://localhost:5000/addToFavourites', {
-            method: 'POST',
+        fetch(`http://localhost:5000/myProduct/${_id}`, {
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(favouritesData)
+            body: JSON.stringify(UpdateDetails)
         })
             .then(res => res.json())
             .then(data => {
-                if (data.acknowledged) {
-                    toast.success('Successfully added on Wishlist')
-                    navigate('/addToFavourites')
+
+                if (data.modifiedCount > 0) {
+                    toast.success('Updated Successfully')
+                    window.location.reload()
                 }
-                else {
-                    toast.error(data.message)
-                    navigate('/addToFavourites')
-                }
+
             })
-        
     }
-    const itemsDetails = {
-        productName:productName,
-        email:email,
-        orderedEmail:user?.email,
-        categories: categories,
-        shopName: shopName,
-        size:size,
-        images:images,
-        id:_id,
-        quantityNumber: quantityNumber,
-        price:discountedPrice,
-        color: color,
-        brand:brand,
-        name:user?.displayName
-    }
-
-    console.log(itemsDetails)
-  
-    const navigateToCheckout = () =>{
-        navigate(`/checkout/${_id}`,{state:{itemsDetails: itemsDetails}})
-    }
-
-
-
-
-
-
 
     return (
         <div>
@@ -189,7 +137,7 @@ const ProductDetails = () => {
                                 <IoStarHalf />
                             </div>
                             <div className='flex items-center gap-2'>
-                                <button onClick={() => handleFavourites(_id)}><FaHeart className='text-2xl text-gray-500' /></button>
+                                <FaHeart className='text-2xl text-gray-500' />
                                 <IoMdShare className='text-2xl ' />
                             </div>
                         </div>
@@ -214,26 +162,66 @@ const ProductDetails = () => {
                             </div>
                             <div className='my-4 flex items-center gap-5 font-bold'>
                                 <h1>Quantity: </h1>
-                                <button className='btn' disabled={quantityNumber === 1} onClick={handleDecrease}>-</button>
-                                <h1 id='quantityValue'>{quantityNumber}</h1>
+                                <button className='btn' disabled={quantityNumber === 0} onClick={handleDecrease}>-</button>
+                                <h1>{quantityNumber}</h1>
                                 <button className='btn' disabled={quantityNumber === 15} onClick={handleIncrease}>+</button>
-
+                                
                             </div>
-                            <div className='flex justify-between items-center mb-20 mt-10 gap-2'>
+                            <div className='flex justify-between items-center mb-20 mt-10 '>
+                               
                                 {
+                                    !isAdmin && !isSeller ? <>
+                                        
+                                    </> : <>
+                                        <label onClick={() => setDeletingProducts(_id)} htmlFor="confirmation-modal" className="btn bg-rose-500 text-white">Delete</label>
 
-                                    <>
-                                        {/* <Link to={`/checkout/${_id}`}>
-                                            <div>
-                                                <button disabled={isAdmin && isSeller} className="btn w-52 bg-rose-500 text-white">Buy Now</button>
+
+                                        <label htmlFor="my_modal_6" className="btn"><MdEditNote className='text-xl' /></label>
+
+                                       
+
+                                        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+                                        <div className="modal" role="dialog">
+                                            <div className="modal-box">
+
+                                                <form onSubmit={handleSubmit(handleUpdateProducts)} className="card-body">
+                                                    <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-5'>
+                                                        <div className="form-control">
+                                                            <label className="label">
+                                                                <span className="label-text">Color</span>
+                                                            </label>
+                                                            <input {...register("color")} type="text" placeholder="color" className="input bg-slate-100" required />
+                                                        </div>
+                                                        <div className="form-control">
+                                                            <label className="label">
+                                                                <span className="label-text">Price</span>
+                                                            </label>
+                                                            <input {...register("price")} type="number" placeholder="Price" className="input bg-slate-100" required />
+                                                        </div>
+                                                        <div className="form-control">
+                                                            <label className="label">
+                                                                <span className="label-text">Discount</span>
+                                                            </label>
+                                                            <input {...register("discount")} type="text" placeholder="Discount" className="input bg-slate-100" required />
+                                                        </div>
+                                                        <div className="form-control">
+                                                            <label className="label">
+                                                                <span className="label-text">Stock</span>
+                                                            </label>
+                                                            <input {...register("stock")} type="number" placeholder="Stock" className="input bg-slate-100" required />
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <button className="btn bg-rose-500 text-white">Update Product</button>
+                                                    </div>
+                                                </form>
+                                                <div className="modal-action">
+                                                    <label htmlFor="my_modal_6" className="btn bg-rose-500 text-white">Close!</label>
+                                                </div>
                                             </div>
-                                        </Link> */}
-                                        <button onClick={navigateToCheckout} disabled={isAdmin && isSeller} className="btn w-52 bg-rose-500 text-white">Buy Now</button>
-
-                                        <button disabled={isAdmin && isSeller} onClick={() => handleAddToCart(_id)}  className=" btn w-1/2 bg-custom-blue text-white" >Add to Cart</button>
-                                    </>
-
-                                }
+                                        </div>
+                                    </>}
                             </div>
                         </div>
                     </div>
@@ -306,9 +294,19 @@ const ProductDetails = () => {
 
             </div>
 
+            {
+                deletingProducts && <ConfirmationModal
+                    title={`Are you sure you want to delete?`}
+                    closeModal={cancelModalProd}
+                    successAction={handleDelete}
+                    modalData={deletingProducts}
+                    buttonName='Delete'
+                >
 
+                </ConfirmationModal>
+            }
         </div>
     );
 };
 
-export default ProductDetails;
+export default MyProductsDetails;

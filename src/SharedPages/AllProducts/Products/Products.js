@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import Product from './Product';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
     const { user } = useContext(AuthContext)

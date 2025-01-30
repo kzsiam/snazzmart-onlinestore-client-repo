@@ -1,51 +1,119 @@
-import React from 'react';
-import { Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, LabelList, BarChart, Label, ComposedChart, Legend, Bar, Line } from 'recharts'
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import { XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList, BarChart, Bar,Label } from 'recharts'
+import { AuthContext } from '../../contexts/AuthProvider';
 
 
 const Dashboard = () => {
+    const { user } = useContext(AuthContext)
+    const { data: allOrderData, refetch, isLoading } = useQuery({
+
+        queryKey: 'allOrderData',
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/orders`)
+            const data = await res.json()
+            return data
+        }
+    })
+    const { data: allUsers } = useQuery({
+
+        queryKey: 'allUsers',
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/allUsers`)
+            const data = await res.json()
+            return data
+        }
+    })
+    const { data: allProducts } = useQuery({
+
+        queryKey: 'allProducts',
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/allproductsOfSnazzMart`)
+            const data = await res.json()
+            return data
+        }
+    })
+
     const data = [
-        { name: 'Page A', uv: 400, pv: 75000, amt: 40000 },
-        { name: 'Page B', uv: 400, pv: 47000, amt: 14000 },
-        { name: 'Page c', uv: 400, pv: 32000, amt: 40020 },
-        { name: 'Page d', uv: 100, pv: 80400, amt: 90740 },
+        {
+            name: 'Page A',
+            uv: 4000,
+            pv: 2400,
+            amt: 2400,
+        },
+        {
+            name: 'Page B',
+            uv: 3000,
+            pv: 1398,
+            amt: 2210,
+        },
+        {
+            name: 'Page C',
+            uv: 2000,
+            pv: 9800,
+            amt: 2290,
+        },
+        {
+            name: 'Page D',
+            uv: 2780,
+            pv: 3908,
+            amt: 2000,
+        },
+        {
+            name: 'Page E',
+            uv: 1890,
+            pv: 4800,
+            amt: 2181,
+        },
+        {
+            name: 'Page F',
+            uv: 2390,
+            pv: 3800,
+            amt: 2500,
+        },
+        {
+            name: 'Page G',
+            uv: 3490,
+            pv: 4300,
+            amt: 2100,
+        },
     ];
+
+
+
+    const total = allOrderData.map(items => items.totalPrice).reduce((acc, curr) => acc + curr, 0);
+
     return (
         <div>
-            <div className='mt-10 mb-40 lg:mx-20 mx-10'>
-                <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5'>
-                    <div className="card bg-base-100 w-96 shadow-xl">
+            <div className='mt-20 mb-40 lg:mx-20 mx-10'>
+                <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-5 mx-10'>
+                    <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <h2 className="card-title">total orders</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Buy Now</button>
-                            </div>
+                            <p className='font-bold'>Total orders: {allOrderData.length}</p>
                         </div>
                     </div>
-                    <div className="card bg-base-100 w-96 shadow-xl">
+                    <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <h2 className="card-title">Ordered Products Sales</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Buy Now</button>
-                            </div>
+                            <p className='font-bold'>Total Users : {allUsers.length}</p>
                         </div>
                     </div>
-                    <div className="card bg-base-100 w-96 shadow-xl">
+
+                    <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <h2 className="card-title">Total Review</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Buy Now</button>
-                            </div>
+                            <p className='font-bold'>Total Products: {allProducts.length}</p>
+                        </div>
+                    </div>
+                    <div className="card bg-base-100 w-80 shadow-xl">
+                        <div className="card-body">
+                            <p className='font-bold'>Total sales Amount: {total} Taka</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='grid lg:grid-cols-2  lg:mx-20 mx-10'>
+            <div className='lg:mx-52 mx-5'>
 
                 <div>
-                    <h1 className='text-start font-bold'>Sales DashBoard</h1>
+                    <h1 className='text-center font-bold mb-20'>Sales Chart</h1>
                     <ResponsiveContainer width="80%" height={400}>
                         <BarChart
                             width={730}
@@ -65,21 +133,6 @@ const Dashboard = () => {
                                 <LabelList dataKey="uv" position="top" />
                             </Bar>
                         </BarChart>
-                    </ResponsiveContainer>
-                </div>
-                <div>
-                    <h1 className='text-start'>sales DashBoard</h1>
-                    <ResponsiveContainer width="80%" height={400}>
-                        <ComposedChart width={730} height={250} data={data}>
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <CartesianGrid stroke="#f5f5f5" />
-                            <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
-                            <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-                            <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-                        </ComposedChart>
                     </ResponsiveContainer>
                 </div>
 

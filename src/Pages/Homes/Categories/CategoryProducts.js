@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Product from '../../../SharedPages/AllProducts/Products/Product';
 import { useLoaderData } from 'react-router-dom';
-import CategoryProduct from './CategoryProduct';
 
 const CategoryProducts = () => {
     const categoriesProducts = useLoaderData()

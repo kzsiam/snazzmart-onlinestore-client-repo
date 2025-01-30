@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { RiBarChartHorizontalFill, } from "react-icons/ri";
 import { AuthContext } from '../../../contexts/AuthProvider';
@@ -10,7 +10,22 @@ const DashBoardLayout = () => {
     const [isSeller] = UseSeller(user?.email)
     const [isAdmin] = UseAdmin(user?.email)
 
-    console.log(isAdmin)
+    console.log(user?.email)
+    const [sellerInfo, setSellerInfo] = useState(null)
+
+   
+    
+        useEffect(() =>{
+                fetch(`http://localhost:5000/allUsers/${user?.email}`)
+                .then(res=> res.json())
+                .then(data =>{
+                    setSellerInfo(data)
+                })
+            
+        },[user?.email])
+
+        console.log(sellerInfo)
+
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -21,7 +36,9 @@ const DashBoardLayout = () => {
                         <Link to='/'>
                             <h1 className='lg:text-4xl text-2xl font-sans font-bold text-center'>Snazz<span className='text-red-500 my-0.5'>Mart</span></h1>
                         </Link>
-                        <h1 className='font-bold text-lg'>Shop Name: Gosebumb</h1>
+                        {
+                            isSeller && <h1 className='font-bold text-lg'>Shop Name: {sellerInfo?.shopName}</h1>
+                        }
                         <label htmlFor="my-drawer" className=" lg:hidden  drawer-button"><RiBarChartHorizontalFill className='w-10' /></label>
 
                     </div>
@@ -36,7 +53,7 @@ const DashBoardLayout = () => {
                                 <li><Link to={"/"} className="mb-5" >Home</Link></li>
                                 <li><Link to={"/dashboard/addProducts"} className="mb-5">Add Products</Link></li>
                                 <li><Link to={"/dashboard/myProducts"} className="mb-5">My Products</Link></li>
-                                <li><Link to={""} className="mb-5">Orders</Link></li>
+                                <li><Link to={"/dashboard/sellerOrders"} className="mb-5">Orders</Link></li>
                             </>
                         }
 

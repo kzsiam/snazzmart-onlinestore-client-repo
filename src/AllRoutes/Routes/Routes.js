@@ -16,6 +16,14 @@ import AllUsers from "../../Pages/AllUsers/AllUsers";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
+import AddToCarts from "../../Pages/AddToCarts/AddToCarts";
+import MyProductsDetails from "../../Pages/MyProducts/MyProductsDetails";
+import AddToFavourites from "../../Pages/AddToFavourites/AddToFavourites";
+import CheckOut from "../../Pages/CheckOut/CheckOut";
+import CartCheckOut from "../../Pages/CheckOut/CartCheckOut";
+import MyOrders from "../../Pages/MyOrders/MyOrders";
+import SellerOrders from "../../Pages/SellerOrders/SellerOrders";
+import SellerOrderDetails from "../../Pages/SellerOrders/SellerOrderDetails";
 export const router = createBrowserRouter([
     {
        path: '/',
@@ -50,6 +58,32 @@ export const router = createBrowserRouter([
             path: '/product/:id',
             loader: ({params}) => fetch(`http://localhost:5000/product/${params.id}`),
             element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
+        },
+        {
+            path: '/myProduct/:id',
+            loader: ({params}) => fetch(`http://localhost:5000/product/${params.id}`),
+            element: <PrivateRoute><MyProductsDetails></MyProductsDetails></PrivateRoute>
+        },
+        {
+            path: '/addToCarts',
+            element: <PrivateRoute><AddToCarts></AddToCarts></PrivateRoute>
+        },
+        {
+            path: '/addToFavourites',
+            element: <PrivateRoute><AddToFavourites></AddToFavourites></PrivateRoute>
+        },
+        {
+            path: '/myOrders',
+            element: <PrivateRoute><MyOrders></MyOrders></PrivateRoute>
+        },
+        {
+            path: '/checkout/:id',
+            element: <PrivateRoute><CheckOut></CheckOut></PrivateRoute>
+        },
+        {
+            path: '/cartCheckout/:id',
+            loader: ({params}) => fetch(`http://localhost:5000/checkout/${params.id}`),
+            element: <PrivateRoute><CartCheckOut></CartCheckOut></PrivateRoute>
         }
        ]
     },
@@ -64,6 +98,15 @@ export const router = createBrowserRouter([
             {
                 path:'/dashboard/addProducts',
                 element: <SellerRoute><AddProducts></AddProducts></SellerRoute>
+            },
+            {
+                path:'/dashboard/sellerOrders',
+                element: <SellerRoute><SellerOrders></SellerOrders></SellerRoute>
+            },
+            {
+                path:'/dashboard/sellerOrderDetails/:id',
+                loader: ({params}) => fetch(`http://localhost:5000/sellerOrderDetails/${params.id}`),
+                element: <SellerRoute><SellerOrderDetails></SellerOrderDetails></SellerRoute>
             },
             {
                 path:'/dashboard/myProducts',

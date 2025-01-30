@@ -32,10 +32,15 @@ const AddProducts = () => {
                 return res.json()
             })
             .then((data) => {
+                console.log(data)
                 setSellerInfo(data)
             })
     }, [user?.email])
     const handleAddProducts = (data) => {
+        const price = parseInt(data.price)
+        const discount = parseInt(data.discount)
+        const stock = parseInt(data.stock)
+        
         const uploadedImg = data.images[0]
         const formData = new FormData()
         formData.append('image', uploadedImg)
@@ -46,21 +51,23 @@ const AddProducts = () => {
         })
             .then(res => res.json())
             .then(imgData => {
-                console.log(imgData.data.display_url)
+                
                 const productsData = {
-                    shopName: sellerInfo[0]?.shopName,
+                    shopName: sellerInfo?.shopName,
                     productName: data.productName,
                     brand: data.brand,
                     categories: data.categories,
                     color: [data.color],
                     description: data.descriptions,
                     images: imgData.data.url,
-                    discount: data.discount,
                     size: data.size,
-                    stock: data.stock,
-                    price: data.price,
-                    email: user?.email
+                    email: user?.email,
+                    stock: stock,
+                    price: price,
+                    discount: discount,
                 }
+
+                console.log(productsData)
 
                 fetch('http://localhost:5000/allProducts', {
                     method: 'POST',
@@ -174,8 +181,8 @@ const AddProducts = () => {
                                     </label>
                                     <input {...register("descriptions")} type="text" placeholder="Descriptions" className="input bg-slate-100 input-lg w-full" required />
 
-                                </div>
-                                <div className="form-control">
+                                </div> 
+                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Products Images</span>
                                     </label>
