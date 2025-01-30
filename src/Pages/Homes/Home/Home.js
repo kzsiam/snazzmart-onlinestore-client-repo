@@ -14,7 +14,7 @@ const Home = () => {
            <Categories></Categories>
            <Products></Products>
 
-           <div className='mt-40'>
+           <div className='mt-40 mb-20'>
                 <Link to={'/allProducts/groceries'}><img className='w-full' src='https://m2ce.sindabad.com/pub/media/scriptlodge/banner/image//web/stb-monthly-bazar-1420-en.jpg' alt=''></img></Link>
            </div>
         </div>
