@@ -81,7 +81,7 @@ const Dashboard = () => {
 
 
 
-    const total = allOrderData.map(items => items.totalPrice).reduce((acc, curr) => acc + curr, 0);
+    const total = allOrderData?.map(items => items.totalPrice).reduce((acc, curr) => acc + curr, 0);
 
     return (
         <div>
@@ -89,18 +89,18 @@ const Dashboard = () => {
                 <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-5 mx-10'>
                     <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <p className='font-bold'>Total orders: {allOrderData.length}</p>
+                            <p className='font-bold'>Total orders: {allOrderData?.length}</p>
                         </div>
                     </div>
                     <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <p className='font-bold'>Total Users : {allUsers.length}</p>
+                            <p className='font-bold'>Total Users : {allUsers?.length}</p>
                         </div>
                     </div>
 
                     <div className="card bg-base-100 w-80 shadow-xl">
                         <div className="card-body">
-                            <p className='font-bold'>Total Products: {allProducts.length}</p>
+                            <p className='font-bold'>Total Products: {allProducts?.length}</p>
                         </div>
                     </div>
                     <div className="card bg-base-100 w-80 shadow-xl">

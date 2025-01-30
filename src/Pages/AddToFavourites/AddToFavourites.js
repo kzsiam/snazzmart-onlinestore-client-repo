@@ -39,6 +39,9 @@ const AddToFavourites = () => {
             }
         })
    }
+   if(favouritesData.length === 0){
+    return <h1 className='font-bold mt-40 mb-96'> no data found</h1>
+}
 
     return (
         <div className='mt-10'>
